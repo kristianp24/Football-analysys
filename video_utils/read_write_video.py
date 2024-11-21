@@ -1,15 +1,15 @@
 import cv2
-
-def readVideo(path):
-    input = cv2.VideoCapture(path)
-    frames = []
-    while(input.isOpened()):
-        flag, frame = input.read()
-        if not flag:
-            break
-        frames.append(frame)
-    
-    return frames
+class VideoUtils:
+    def readVideo(path):
+        input = cv2.VideoCapture(path)
+        frames = []
+        while(input.isOpened()):
+            flag, frame = input.read()
+            if not flag:
+                break
+            frames.append(frame)
+        
+        return frames
 
 
 def writeVideo(frames,output_path):
@@ -19,3 +19,5 @@ def writeVideo(frames,output_path):
     for frame in frames:
         video.write(frame)
     video.release()
+
+

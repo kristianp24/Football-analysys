@@ -21,7 +21,7 @@ class Tracker:
 
     def track_objects(self, frames, path_to_json):
 
-        if path_to_json is None:
+        if path_to_json is not None:
             with open(path_to_json, "r") as file:
                 tracked_data = json.load(file)
                 if tracked_data:

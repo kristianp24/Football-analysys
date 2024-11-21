@@ -1,1 +1,1 @@
-from .read_write_video import readVideo,writeVideo
+from .read_write_video import VideoUtils
