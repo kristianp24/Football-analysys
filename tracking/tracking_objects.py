@@ -106,52 +106,64 @@ class Tracker:
         for nr, frame in enumerate(frames):
             aux_frame = frame.copy()
 
-            player_list = tracked_data['player']
-            referee_list = tracked_data['referees']
-            ball_list = tracked_data['ball']
+            player_list = [player for player in tracked_data['player'] if player['frame_number'] == nr]
+            referee_list = [referee for referee in tracked_data['referees'] if referee['frame_number'] == nr]
+            ball_list = [ball for ball in tracked_data['ball'] if ball['frame_number'] == nr]
 
             for player in player_list:
-                if player['frame_number'] == nr:
-                    x1 = player['bbox'][0]
-                    y1 = player['bbox'][1]
-                    x2 = player['bbox'][2]
-                    y2 = int(player['bbox'][3])
+                
+                    x1, y1, x2, y2 = player['bbox']
                     center_x = int((x1+x2) / 2)
                     width = x2 - x1
 
                     cv2.ellipse(
                         aux_frame,
-                        center=(center_x,y2),
+                        center=(center_x,int(y2)),
                         axes=(int(width), int(0.4*width)),
                         angle = 0.0,
-                        startAngle=0.0,
-                        endAngle=360,
+                        startAngle=-40,
+                        endAngle=260,
                         color = (255, 0, 0),
                         thickness=2,
-                        lineType=cv2.LINE_4
+                        lineType=cv2.LINE_AA
                     )
                 
             for referee in referee_list:
-                    if referee['frame_number'] == nr:
-                        x1 = referee['bbox'][0]
-                        y1 = referee['bbox'][1]
-                        x2 = referee['bbox'][2]
-                        y2 = int(referee['bbox'][3])
+                    
+                        x1, y1, x2, y2 = referee['bbox']
                         center_x = int((x1+x2) / 2)
                         width = x2 - x1
 
                         cv2.ellipse(
                             aux_frame,
-                            center=(center_x,y2),
+                            center=(center_x,int(y2)),
                             axes=(int(width), int(0.4*width)),
                             angle = 0.0,
-                            startAngle=0.0,
-                            endAngle=360,
-                            color = (255, 255, 0),
+                            startAngle=-40,
+                            endAngle=260,
+                            color = (0, 255, 255),
                             thickness=2,
+                            lineType=cv2.LINE_AA
+                        )
+            
+            for ball in ball_list:
+                 x1, y1, x2, y2 = ball['bbox']
+                 center_x = int((x1+x2) / 2)
+                 width = x2 - x1
+                
+                 cv2.ellipse(
+                            aux_frame,
+                            center=(center_x,int(y2)),
+                            axes=(int(width), int(0.4*width)),
+                            angle = 0.0,
+                            startAngle=0,
+                            endAngle=360,
+                            color = (0, 0, 255),
+                            thickness=-1,
                             lineType=cv2.LINE_4
                         )
-                
+
+
             output.append(aux_frame)
 
         return output
