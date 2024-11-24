@@ -1,5 +1,5 @@
 /yolov8m.pt
 /yolov8x.pt
-writed_video/writed_from_function.avi
+/writed_video
 colab_training/best.pt
 runs/detect/predict4/8fd33_4.avi
